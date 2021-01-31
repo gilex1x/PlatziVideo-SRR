@@ -6,13 +6,15 @@ import { Router } from 'react-router';
 import { createBrowserHistory } from 'history';
 import reducer from './reducers';
 import App from './routes/App';
-import initialState from './utils/initialState';
 
 const history = createBrowserHistory();
+const preloadedState = window.__PRELOADED_STATE__;
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducer, initialState, composeEnhancers());
+const store = createStore(reducer, preloadedState, composeEnhancers());
+//Una vez cargado el preloadState lo eliminamos
+delete window.__PRELOADED_STATE__;
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <Provider store={store}>
     <Router history={history}>
       <App />
