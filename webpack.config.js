@@ -2,6 +2,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CompressionWebpack = require('compression-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -58,10 +60,18 @@ module.exports = {
     historyApiFallback: true,
     hot: true,
   },
-
+  optimization:{
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
   plugins: [
     isDev ? new webpack.HotModuleReplacementPlugin():
     ()=>{},
+    isDev ? ()=>{}: 
+    new CompressionWebpack({
+      test: /\.js$|\.css$/,
+      filename: '[path][base].gz'
+    }),
     new MiniCssExtractPlugin({
       filename: 'assets/app.css',
     }),

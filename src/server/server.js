@@ -35,7 +35,7 @@ if (ENV === 'development') {
   app.use(helmet());
   app.use(helmet.permittedCrossDomainPolicies());
   //Le bloqueamos cierta información al navegador sobre nuestra coneccion
-  app.disable('x-powered-by');
+  //app.disable('x-powered-by');
 }
 //El setResponse recibe el html a renderizar y el state para redux
 const setResponse = (html, preloadedState) => {
